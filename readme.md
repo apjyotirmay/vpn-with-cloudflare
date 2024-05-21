@@ -1,4 +1,6 @@
 # This guide will walk you through setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel on a server, ensuring no ports are exposed to the public internet.
+
+Comprehensive Guide for Setting Up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel
 This guide will walk you through setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel on a server, ensuring no ports are exposed to the public internet.
 
 1. Provisioning a Server
@@ -121,10 +123,12 @@ Cloudflare Dashboard: Configure DNS settings to route traffic through the Argo T
 Generate Configuration: Create a Wireguard configuration file for your client device.
 Connect to Server: Use the private IP address of your server within your LAN.
 Conclusion
-With this setup, your traffic will be securely tunneled through Cloudflare's network using Argo Tunnel, with PiHole handling DNS requests and blocking malicious content. This configuration ensures a secure and private environment without exposing ports to the public internet.
+With this setup, your traffic will be securely tunneled through Cloudflare's network using Argo Tunnel, with Pi-hole handling DNS requests and blocking malicious content. This configuration ensures a secure and private environment without exposing ports to the public internet.
 
 Tips:
 
 Regularly update your Docker images and system packages.
 Review Cloudflare and Wireguard documentation for advanced configurations and security enhancements.
-By following this guide, you'll establish a robust and secure network solution leveraging the power of Docker, PiHole, Wireguard, and Cloudflare's Argo Tunnel.
+By following this guide, you'll establish a robust and secure network solution leveraging the power of Docker, Pi-hole, Wireguard, and Cloudflare's Argo Tunnel.
+
+

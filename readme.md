@@ -8,7 +8,7 @@ Operating System: Preferably Ubuntu 20.04 LTS or later.
 Install Docker CE:
 
 '''bash
-Copy code
+
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -19,14 +19,14 @@ sudo apt-get install docker-ce
 Install Docker Compose:
 
 '''bash
-Copy code
+
 sudo apt install docker-compose
 '''
 3. Install Wireguard
 Install Wireguard on Ubuntu 20.04:
 
 '''bash
-Copy code
+
 sudo apt update
 sudo apt install wireguard
 '''
@@ -34,52 +34,52 @@ sudo apt install wireguard
 Download Docker Compose Configuration:
 
 '''bash
-Copy code
+
 wget https://raw.githubusercontent.com/jbencina/vpn/master/docker-compose.yaml
 '''
 Create Cloudflared Configuration:
 Create a config.yml file inside the cloudflared directory with your Cloudflare credentials.
 
 yaml
-Copy code
+
 tunnel: [TUNNEL_ID] # Replace [TUNNEL_ID] with your tunnel ID
 credentials-file: /etc/cloudflared/[CREDENTIALS_FILE] # Replace [CREDENTIALS_FILE] with your Cloudflare credentials file path
 Pull Docker Images:
 
 '''bash
-Copy code
+
 sudo docker-compose pull
 '''
 Start Docker Containers:
 
 '''bash
-Copy code
+
 sudo docker-compose up -d
 '''
 5. Configure Argo Tunnel
 Install Cloudflared:
 
 '''bash
-Copy code
+
 wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
 sudo dpkg -i cloudflared-stable-linux-amd64.deb
 '''
 Authenticate Cloudflared:
 
 '''bash
-Copy code
+
 sudo cloudflared tunnel login
 '''
 Create Argo Tunnel:
 
 '''bash
-Copy code
+
 cloudflared tunnel create [TUNNEL_NAME]
 '''
 Start the Tunnel:
 
 '''bash
-Copy code
+
 cloudflared tunnel run [TUNNEL_NAME]
 '''
 6. DNS Configuration

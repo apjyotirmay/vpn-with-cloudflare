@@ -1,53 +1,42 @@
-# Installing Wireguard, PiHole, Cloudflared VPN
-Certainly! Here's a comprehensive guide on setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel, without exposing ports to the public internet:
+# Installing Wireguard, PiHole, Cloudflared VPNThis guide will walk you through setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel on a server, ensuring no ports are exposed to the public internet.
 
-### 1. Provisioning a Server:
+1. Provisioning a Server
+Choose a Server: You can use a VPS provider or a home server with a static private IP address.
+Operating System: Preferably Ubuntu 20.04 LTS or later.
+2. Install Docker and Docker Compose
+Install Docker CE:
 
-Choose a server provider or set up a server at home with a static private IP address.
-
-### 2. Docker Install:
-
-Install Docker CE and Docker Compose on your server.
-
-#### Install Docker CE:
-```bash
+bash
+Copy code
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
 sudo apt-get install docker-ce
-```
+Install Docker Compose:
 
-#### Install Docker Compose:
-```bash
+bash
+Copy code
 sudo apt install docker-compose
-```
+3. Install Wireguard
+Install Wireguard on Ubuntu 20.04:
 
-### 3. Wireguard Install:
-
-Install Wireguard on your server.
-
-#### Install Wireguard:
-Follow the instructions for your specific operating system. For Ubuntu 20.04:
-```bash
+bash
+Copy code
 sudo apt update
 sudo apt install wireguard
-```
+4. Setup PiHole and Cloudflared with Argo Tunnel using Docker Compose
+Download Docker Compose Configuration:
 
-### 4. PiHole / Cloudflared with Argo Tunnel:
-
-Set up PiHole and Cloudflared with Argo Tunnel using Docker Compose.
-
-#### Download Docker Compose Configuration:
-```bash
+bash
+Copy code
 wget https://raw.githubusercontent.com/jbencina/vpn/master/docker-compose.yaml
-```
+Modify docker-compose.yaml:
+Replace [ARGO_TUNNEL_NAME] with your desired tunnel name.
 
-#### Modify Docker Compose Configuration:
-Edit the `docker-compose.yaml` file to include Cloudflared with Argo Tunnel configuration. Replace `[ARGO_TUNNEL_NAME]` with your desired tunnel name.
-
-```yaml
+yaml
+Copy code
 version: '3'
 
 services:
@@ -76,7 +65,7 @@ services:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
     restart: unless-stopped
-    command: tunnel --config /etc/cloudflared/config.yml run [ARGO_TUNNEL_NAME] # Replace [ARGO_TUNNEL_NAME] with your tunnel name
+    command: tunnel --config /etc/cloudflared/config.yml run [ARGO_TUNNEL_NAME]
     networks:
       - vpn
     volumes:
@@ -85,62 +74,56 @@ services:
 networks:
   vpn:
     driver: bridge
-```
+Create Cloudflared Configuration:
+Create a config.yml file inside the cloudflared directory with your Cloudflare credentials.
 
-#### Create Cloudflared Configuration:
-Create a configuration file named `config.yml` inside the `cloudflared` directory with your Cloudflare credentials:
-```yaml
+yaml
+Copy code
 tunnel: [TUNNEL_ID] # Replace [TUNNEL_ID] with your tunnel ID
 credentials-file: /etc/cloudflared/[CREDENTIALS_FILE] # Replace [CREDENTIALS_FILE] with your Cloudflare credentials file path
-```
+Pull Docker Images:
 
-#### Pull Docker Images:
-```bash
+bash
+Copy code
 sudo docker-compose pull
-```
+Start Docker Containers:
 
-#### Start Docker Containers:
-```bash
+bash
+Copy code
 sudo docker-compose up -d
-```
+5. Configure Argo Tunnel
+Install Cloudflared:
 
-### 5. Configure Argo Tunnel:
-
-Install Cloudflared on your server and authenticate it with your Cloudflare account.
-
-#### Install Cloudflared:
-```bash
+bash
+Copy code
 wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
 sudo dpkg -i cloudflared-stable-linux-amd64.deb
-```
+Authenticate Cloudflared:
 
-#### Authenticate Cloudflared:
-```bash
+bash
+Copy code
 sudo cloudflared tunnel login
-```
+Create Argo Tunnel:
 
-#### Create Argo Tunnel:
-```bash
-cloudflared tunnel create [TUNNEL_NAME] # Replace [TUNNEL_NAME] with your desired tunnel name
-```
+bash
+Copy code
+cloudflared tunnel create [TUNNEL_NAME]
+Start the Tunnel:
 
-#### Start the Tunnel:
-```bash
-cloudflared tunnel run [TUNNEL_NAME] # Replace [TUNNEL_NAME] with your tunnel name
-```
+bash
+Copy code
+cloudflared tunnel run [TUNNEL_NAME]
+6. DNS Configuration
+Domain Settings: Point your domain’s DNS records to Cloudflare's nameservers.
+Cloudflare Dashboard: Configure DNS settings to route traffic through the Argo Tunnel.
+7. Configure Wireguard Client
+Generate Configuration: Create a Wireguard configuration file for your client device.
+Connect to Server: Use the private IP address of your server within your LAN.
+Conclusion
+With this setup, your traffic will be securely tunneled through Cloudflare's network using Argo Tunnel, with PiHole handling DNS requests and blocking malicious content. This configuration ensures a secure and private environment without exposing ports to the public internet.
 
-### 6. DNS Configuration:
+Tips:
 
-Point your domain's DNS records to Cloudflare's nameservers and configure DNS settings.
-
-### 7. Client Configuration:
-
-Configure Wireguard on your client device to connect to the private IP address of your server.
-
-### Conclusion:
-
-With this setup, all traffic between your client device and the server will be securely tunneled through Cloudflare's network using Argo Tunnel. PiHole will intercept DNS requests and block malicious content, while Cloudflared with Argo Tunnel will handle DNS resolution securely.
-
-Remember to follow Cloudflare's documentation for configuring Argo Tunnel and DNS settings to ensure proper functionality and security.
-
-This approach provides a secure and private setup without exposing any ports to the public internet.
+Regularly update your Docker images and system packages.
+Review Cloudflare and Wireguard documentation for advanced configurations and security enhancements.
+By following this guide, you'll establish a robust and secure network solution leveraging the power of Docker, PiHole, Wireguard, and Cloudflare's Argo Tunnel.

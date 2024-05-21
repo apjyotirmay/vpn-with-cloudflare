@@ -1,4 +1,5 @@
 # This guide will walk you through setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel on a server, ensuring no ports are exposed to the public internet.
+This guide will walk you through setting up Wireguard VPN, PiHole, and Cloudflared with Argo Tunnel on a server, ensuring no ports are exposed to the public internet.
 
 1. Provisioning a Server
 Choose a Server: You can use a VPS provider or a home server with a static private IP address.

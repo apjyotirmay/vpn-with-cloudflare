@@ -8,7 +8,7 @@ Choose a Server: You can use a VPS provider or a home server with a static priva
 Operating System: Preferably Ubuntu 20.04 LTS or later.
 2. Install Docker and Docker Compose
 Install Docker CE:
-
+'''
 bash
 Copy code
 sudo apt-get update
@@ -17,22 +17,27 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
 sudo apt-get install docker-ce
+'''
 Install Docker Compose:
-
+'''
 bash
 Copy code
 sudo apt install docker-compose
-3. Install Wireguard
+'''
+4. Install Wireguard
 Install Wireguard on Ubuntu 20.04:
 
 bash
+'''
 Copy code
 sudo apt update
 sudo apt install wireguard
+'''
 4. Setup PiHole and Cloudflared with Argo Tunnel using Docker Compose
 Download Docker Compose Configuration:
 
 bash
+
 Copy code
 wget https://raw.githubusercontent.com/jbencina/vpn/master/docker-compose.yaml
 Modify docker-compose.yaml:
